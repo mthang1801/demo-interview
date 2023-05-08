@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data:/var/lib/mysql
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
